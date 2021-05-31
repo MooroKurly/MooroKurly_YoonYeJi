@@ -21,14 +21,30 @@ class BannerTableViewCell: UITableViewCell {
         return collectionView
     }()
     
+    var indicatorBox: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        view.layer.cornerRadius = 8
+        return view
+    }()
+    
+    var indicatorPage: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
 
+    var bannerList = ["imgBanner", "ImgBanner2"]
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+    
     }
     
     func setUI(){
-        self.addSubview(bannerCollectionView)
+        addSubviews(bannerCollectionView, indicatorBox)
+        indicatorBox.addSubview(indicatorPage)
         
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
@@ -41,6 +57,21 @@ class BannerTableViewCell: UITableViewCell {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(height)
         }
+        
+        indicatorBox.snp.makeConstraints {
+            $0.trailing.equalTo(bannerCollectionView.snp.trailing).offset(-10)
+            $0.bottom.equalTo(bannerCollectionView.snp.bottom).offset(-10)
+            $0.height.equalTo(20)
+            $0.width.equalTo(40)
+        }
+        
+        indicatorPage.snp.makeConstraints {
+            indicatorPage.text = "1 / \(bannerList.count)"
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -61,15 +92,22 @@ class BannerTableViewCell: UITableViewCell {
 
 }
 
+extension BannerTableViewCell: UICollectionViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let page = Int(targetContentOffset.pointee.x / self.frame.width)
+        self.indicatorPage.text = "\(page + 1) / \(bannerList.count)"
+    }
+}
+
 extension BannerTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return bannerList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCollectionViewCell", for: indexPath) as? BannerCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.setData(BannerImage: "imgBanner")
+        cell.setData(BannerImage: bannerList[indexPath.row])
         
         return cell
     }
@@ -82,7 +120,7 @@ extension BannerTableViewCell: UICollectionViewDelegateFlowLayout {
         let cellWidth = width * (375/375)
         let height = width * (345/375)
         
-        return CGSize(width: width, height: height)
+        return CGSize(width: cellWidth, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
