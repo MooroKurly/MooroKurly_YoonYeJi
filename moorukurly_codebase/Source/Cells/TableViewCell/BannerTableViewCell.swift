@@ -36,11 +36,7 @@ class BannerTableViewCell: UITableViewCell {
     }()
 
     var bannerList = ["imgBanner", "ImgBanner2"]
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    
-    }
+    var pageIndex: Int = 1
     
     func setUI(){
         addSubviews(bannerCollectionView, indicatorBox)
@@ -58,6 +54,8 @@ class BannerTableViewCell: UITableViewCell {
             $0.height.equalTo(height)
         }
         
+        bannerCollectionView.scrollToItem(at: IndexPath(item: 500, section: 0), at: .right, animated: false)
+        
         indicatorBox.snp.makeConstraints {
             $0.trailing.equalTo(bannerCollectionView.snp.trailing).offset(-10)
             $0.bottom.equalTo(bannerCollectionView.snp.bottom).offset(-10)
@@ -73,10 +71,7 @@ class BannerTableViewCell: UITableViewCell {
         
         
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -94,20 +89,23 @@ class BannerTableViewCell: UITableViewCell {
 
 extension BannerTableViewCell: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let page = Int(targetContentOffset.pointee.x / self.frame.width)
+        var page = Int(targetContentOffset.pointee.x / self.frame.width)
+        if page >= bannerList.count {
+            page = page % bannerList.count
+        }
         self.indicatorPage.text = "\(page + 1) / \(bannerList.count)"
     }
 }
 
 extension BannerTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bannerList.count
+        return 1000
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCollectionViewCell", for: indexPath) as? BannerCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.setData(BannerImage: bannerList[indexPath.row])
+        cell.setData(BannerImage: bannerList[indexPath.row % bannerList.count])
         
         return cell
     }
