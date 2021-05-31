@@ -10,11 +10,16 @@ import UIKit
 class ProductTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
+    
+    
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }()
+    
+    
     
     var productCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -25,12 +30,20 @@ class ProductTableViewCell: UITableViewCell {
         return collectionView
     }()
     
+
+
     // MARK: - properties
     var productDummyData : [ProductModelData] = []
     
     // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+    }
+    
+    
+    override func prepareForReuse() {
+        productCollectionView.reloadData()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -54,16 +67,18 @@ class ProductTableViewCell: UITableViewCell {
         productCollectionView.delegate = self
         productCollectionView.dataSource = self
         productCollectionView.register(ProductCollectionViewCell.self, forCellWithReuseIdentifier: "ProductCollectionViewCell")
+     
+    }
+
+    
+    func setData(productList: [ProductModelData]) {
+        productDummyData = productList
+        productCollectionView.reloadData()
+
     }
     
-    func setDummyData() {
-        productDummyData = [
-            ProductModelData(productImage: "imgFood1", productName: "[우리밀] 백밀가루 & 옛밀가루", productSalePercent: "15%", productPrice: "19000원"),
-            ProductModelData(productImage: "imgFood2", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
-            ProductModelData(productImage: "imgFood3", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
-        ]
-    }
-    
+
+
 }
 
 extension ProductTableViewCell: UICollectionViewDelegate {
@@ -114,3 +129,5 @@ extension ProductTableViewCell : UICollectionViewDelegateFlowLayout {
         return 0
     }
 }
+
+

@@ -10,6 +10,8 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
+    
+    var cachedPosition : [CGFloat] = [0,0,0,0,0,0,0]
     // MARK: - UI properties
     var headerView: UIView = {
         let view = UIView()
@@ -31,8 +33,8 @@ class HomeViewController: UIViewController {
     
     var customTabbarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         return collectionView
@@ -47,6 +49,17 @@ class HomeViewController: UIViewController {
     
     let footer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 352))
     
+    let productDummyData: [ProductModelData] = [
+        ProductModelData(productImage: "imgFood1", productName: "[우리밀] 백밀가루 & 옛밀가루", productSalePercent: "15%", productPrice: "19000원"),
+        ProductModelData(productImage: "imgFood2", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
+        ProductModelData(productImage: "imgFood3", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
+    ]
+    
+    let productDummyData2: [ProductModelData] = [
+        ProductModelData(productImage: "imgProduct", productName: "[윤예지] 윤예지표", productSalePercent: "15%", productPrice: "19000원"),
+        ProductModelData(productImage: "imgProduct", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
+        ProductModelData(productImage: "imgProduct", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
+    ]
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -69,7 +82,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    
+
     func setUI() {
         view.addSubviews(headerView, logoImageView, cartButton, customTabbarCollectionView, customTabbarCollectionView, mainTableView, footerImageView)
         
@@ -165,6 +178,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - 홈뷰를 구성하는 메인 테이블뷰
 
 extension HomeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // 없어졌을 때 호출
+        if let cell = cell as? ProductTableViewCell {
+            print(indexPath.row)
+            cachedPosition[indexPath.section] = cell.productCollectionView.contentOffset.x
+            print("current Cache",cachedPosition)
+        }
+    }
    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -216,11 +238,12 @@ extension HomeViewController: UITableViewDataSource {
             guard let productCell = tableView.dequeueReusableCell(withIdentifier: "ProductTableViewCell", for: indexPath) as? ProductTableViewCell else {
                 return UITableViewCell() }
             productCell.selectionStyle = .none
-            productCell.titleLabel.text = "이 상품 어때요?"
-            productCell.setDummyData()
             productCell.setUI()
+            productCell.titleLabel.text = "이 상품 어때요?"
+            productCell.setData(productList: productDummyData)
+            productCell.productCollectionView.contentOffset.x = cachedPosition[indexPath.section]
             return productCell
-        case 2:
+        case 2: // 일일특가
             guard let dailySpecialCell = tableView.dequeueReusableCell(withIdentifier: "DailySpecialTableViewCell", for: indexPath) as? DailySpecialTableViewCell else {
                 return UITableViewCell() }
             dailySpecialCell.selectionStyle = .none
@@ -229,7 +252,7 @@ extension HomeViewController: UITableViewDataSource {
             dailySpecialCell.setDummyData()
             dailySpecialCell.setUI()
             return dailySpecialCell
-        case 3:
+        case 3: // 특가/혜택
             guard let benefitCell = tableView.dequeueReusableCell(withIdentifier: "BenefitsTableViewCell", for: indexPath) as? BenefitsTableViewCell else {
                 return UITableViewCell() }
             benefitCell.selectionStyle = .none
@@ -237,17 +260,20 @@ extension HomeViewController: UITableViewDataSource {
             benefitCell.titleLabel.text = "특가/혜택"
             benefitCell.setUI()
             return benefitCell
-        case 4:
-            guard let productCell = tableView.dequeueReusableCell(withIdentifier: "ProductTableViewCell", for: indexPath) as? ProductTableViewCell else {
+        case 4: // 놓치면 후회할 가격
+            guard let regretCell = tableView.dequeueReusableCell(withIdentifier: "ProductTableViewCell", for: indexPath) as? ProductTableViewCell else {
                 return UITableViewCell() }
-            productCell.selectionStyle = .none
-            productCell.titleLabel.text = "놓치면 후회할 가격"
-            productCell.setDummyData()
-            productCell.setUI()
-            return productCell
+            regretCell.selectionStyle = .none
+            regretCell.setUI()
+            regretCell.titleLabel.text = "놓치면 후회할 가격"
+            regretCell.setData(productList: productDummyData2)
+            regretCell.productCollectionView.contentOffset.x = cachedPosition[indexPath.section]
+
+            return regretCell
         default:
             return UITableViewCell()
         }
     }
+    
     
 }
