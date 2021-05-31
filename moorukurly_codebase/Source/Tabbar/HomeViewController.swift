@@ -10,8 +10,6 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
-    
-    var cachedPosition : [CGFloat] = [0,0,0,0,0,0,0]
     // MARK: - UI properties
     var headerView: UIView = {
         let view = UIView()
@@ -40,14 +38,21 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
+    var topButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "buttonFloatingbtn"), for: .normal)
+        button.isHidden = true
+        return button
+    }()
+    
+    let footer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 352))
+    
     var footerImageView = UIImageView()
     
     var mainTableView = UITableView()
     
     // MARK: - properties
     var tabList = ["컬리추천", "신상품", "베스트", "알뜰쇼핑", "특가/혜택"]
-    
-    let footer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 352))
     
     let productDummyData: [ProductModelData] = [
         ProductModelData(productImage: "imgFood1", productName: "[우리밀] 백밀가루 & 옛밀가루", productSalePercent: "15%", productPrice: "19000원"),
@@ -60,11 +65,19 @@ class HomeViewController: UIViewController {
         ProductModelData(productImage: "imgProduct", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
         ProductModelData(productImage: "imgProduct", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
     ]
+    var cachedPosition : [CGFloat] = [0,0,0,0,0,0,0]
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setDelegate()
+        setUI()
+
+    }
+    
+    
+    func setDelegate() {
         customTabbarCollectionView.delegate = self
         customTabbarCollectionView.dataSource = self
         customTabbarCollectionView.register(CustomTabCollectionViewCell.self, forCellWithReuseIdentifier: "CustomTabCollectionViewCell")
@@ -75,16 +88,10 @@ class HomeViewController: UIViewController {
         mainTableView.register(ProductTableViewCell.self, forCellReuseIdentifier: "ProductTableViewCell")
         mainTableView.register(DailySpecialTableViewCell.self, forCellReuseIdentifier: "DailySpecialTableViewCell")
         mainTableView.register(BenefitsTableViewCell.self, forCellReuseIdentifier: "BenefitsTableViewCell")
-        
-        footer.backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 248 / 255, alpha: 1.0)
-        mainTableView.tableFooterView = footer
-        setUI()
     }
-    
-    
 
     func setUI() {
-        view.addSubviews(headerView, logoImageView, cartButton, customTabbarCollectionView, customTabbarCollectionView, mainTableView, footerImageView)
+        view.addSubviews(headerView, logoImageView, cartButton, customTabbarCollectionView, customTabbarCollectionView, mainTableView, footerImageView, topButton)
         
         footer.addSubview(footerImageView)
         
@@ -122,9 +129,24 @@ class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview().offset(-60)
         }
         
+        topButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.bottom.equalToSuperview().offset(-98)
+            $0.width.height.equalTo(47)
+        }
+        
+        topButton.addTarget(self, action: #selector(topButtonClicked), for: .touchUpInside)
+            
         mainTableView.separatorStyle = .none
+        footer.backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 248 / 255, alpha: 1.0)
+        mainTableView.tableFooterView = footer
     }
     
+    @objc func topButtonClicked() {
+        let indexPath = IndexPath(row: 0, section:0)
+        self.mainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    }
+
 }
 
 // MARK: - 커스텀 탭바 메뉴
@@ -182,9 +204,9 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // 없어졌을 때 호출
         if let cell = cell as? ProductTableViewCell {
-            print(indexPath.row)
+//            print(indexPath.row)
             cachedPosition[indexPath.section] = cell.productCollectionView.contentOffset.x
-            print("current Cache",cachedPosition)
+//            print("current Cache",cachedPosition)
         }
     }
    
@@ -205,9 +227,9 @@ extension HomeViewController: UITableViewDelegate {
             return height
         case 2: // 일일특가
             return 650
-        case 3:
+        case 3: // 특가/혜택
             return 406
-        case 4:
+        case 4: // 놓치면 후회할 가격
             let width = UIScreen.main.bounds.width
             let cellWidth = UIScreen.main.bounds.width * (375/375)
             let height = width * (345/cellWidth)
@@ -274,6 +296,28 @@ extension HomeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
-    
+}
+
+
+extension HomeViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool{
+           return true
+       }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let initialPoint = CGPoint(x: 0, y: 0)
+        
+        if mainTableView.contentOffset.y - initialPoint.y > 100 {
+            UIView.animate(withDuration: 1.0) {
+                self.topButton.alpha = 1.0
+                self.topButton.isHidden = false
+            }
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.topButton.alpha = 0.0
+            }
+        }
+    }
 }
