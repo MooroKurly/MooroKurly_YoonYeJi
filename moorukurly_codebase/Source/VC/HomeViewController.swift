@@ -48,6 +48,8 @@ class HomeViewController: UIViewController {
     // MARK: - properties
     var tabList = ["컬리추천", "신상품", "베스트", "알뜰쇼핑", "특가/혜택"]
     
+    let refreshControl = UIRefreshControl()
+    
     let productDummyData: [ProductModelData] = [
         ProductModelData(productImage: "imgFood1", productName: "[우리밀] 백밀가루 & 옛밀가루", productSalePercent: "15%", productPrice: "19000원"),
         ProductModelData(productImage: "imgFood2", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
@@ -59,6 +61,7 @@ class HomeViewController: UIViewController {
         ProductModelData(productImage: "imgProduct", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
         ProductModelData(productImage: "imgProduct", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
     ]
+    
     var cachedPosition : [CGFloat] = [0,0,0,0,0,0,0]
     // MARK: - LifeCycle
     
@@ -67,7 +70,7 @@ class HomeViewController: UIViewController {
         
         setDelegate()
         setUI()
-
+        initRefresh()
     }
     
     
@@ -139,6 +142,18 @@ class HomeViewController: UIViewController {
     @objc func topButtonClicked() {
         let indexPath = IndexPath(row: 0, section:0)
         self.mainTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    }
+    
+    func initRefresh() {
+        refreshControl.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
+        mainTableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshTable(refresh: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.mainTableView.reloadData()
+            refresh.endRefreshing()
+        }
     }
 
 }
