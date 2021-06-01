@@ -146,13 +146,13 @@
 				AAA63AE6266114C6002D5B6C /* Model */,
 				AABBBC8526602DF0001CFE64 /* Cells */,
 				AABBBC77266012E7001CFE64 /* Extension */,
-				AABBBC64266011D0001CFE64 /* Tabbar */,
+				AABBBC64266011D0001CFE64 /* VC */,
 				AABBBC4F2660109D001CFE64 /* TabBarViewController.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
 		};
-		AABBBC64266011D0001CFE64 /* Tabbar */ = {
+		AABBBC64266011D0001CFE64 /* VC */ = {
 			isa = PBXGroup;
 			children = (
 				AABBBC65266011DC001CFE64 /* HomeViewController.swift */,
@@ -161,7 +161,7 @@
 				AABBBC6F266011F3001CFE64 /* SearchViewController.swift */,
 				AABBBC72266011FB001CFE64 /* MyKurlyViewController.swift */,
 			);
-			path = Tabbar;
+			path = VC;
 			sourceTree = "<group>";
 		};
 		AABBBC77266012E7001CFE64 /* Extension */ = {
