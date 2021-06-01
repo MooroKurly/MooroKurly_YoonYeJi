@@ -9,10 +9,17 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    var headerView = HeaderView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        headerView.titleLabel.text = "검색"
+        view.addSubview(headerView)
+        
+        headerView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+        }
     }
     
 
