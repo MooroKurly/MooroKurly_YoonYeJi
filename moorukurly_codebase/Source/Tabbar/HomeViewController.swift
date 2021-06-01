@@ -6,44 +6,38 @@
 //
 
 import UIKit
+
 import SnapKit
+import Then
 
 class HomeViewController: UIViewController {
     
     // MARK: - UI properties
-    var headerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .purple
-        return view
-    }()
+    var headerView = UIView().then {
+        $0.backgroundColor = .purple
+    }
     
-    var logoImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "img_logo")
-        return image
-    }()
+    var logoImageView = UIImageView().then {
+        $0.image = UIImage(named: "img_logo")
+    }
     
-    var cartButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_cart"), for: .normal)
-        return button
-    }()
+    var cartButton = UIButton().then {
+        $0.setImage(UIImage(named: "btn_cart"), for: .normal)
+    }
     
-    var customTabbarCollectionView: UICollectionView = {
+    var customTabbarCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.isScrollEnabled = false
-        return collectionView
-    }()
+        $0.backgroundColor = .white
+        $0.isScrollEnabled = false
+        $0.contentInset = UIEdgeInsets.zero
+        $0.collectionViewLayout = layout
+    }
     
-    var topButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "buttonFloatingbtn"), for: .normal)
-        button.isHidden = true
-        return button
-    }()
+    var topButton = UIButton().then {
+        $0.setImage(UIImage(named: "buttonFloatingbtn"), for: .normal)
+        $0.isHidden = true
+    }
     
     let footer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 352))
     

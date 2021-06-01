@@ -9,20 +9,19 @@ import UIKit
 
 class BenefitsTableViewCell: UITableViewCell {
 
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
+    var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+    }
     
-    var BenefitsCollectionView: UICollectionView = {
+    var BenefitsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 248 / 255, alpha: 1.0)
-        collectionView.isScrollEnabled = false
         layout.scrollDirection = .vertical
-        return collectionView
-    }()
+        $0.backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 248 / 255, alpha: 1.0)
+        $0.isScrollEnabled = false
+        $0.contentInset = UIEdgeInsets.zero
+        $0.collectionViewLayout = layout
+    }
+    
     
     let imageList = ["imgSale1", "imgSale2", "imgSale3"]
     

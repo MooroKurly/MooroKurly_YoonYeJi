@@ -7,34 +7,31 @@
 
 import UIKit
 
+import Then
+
 class DailySpecialCollectionViewCell: UICollectionViewCell {
     var productImageView = UIImageView()
     
-    var remainingTimeLabel: UILabel = {
-        var label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        label.textColor = .white
-        return label
-    }()
+    var remainingTimeLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        $0.textColor = .white
+    }
     
-    var saleBoxView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0.4, green: 0.0, blue: 0.52, alpha: 0.5)
-        return view
-    }()
+    var saleBoxView = UIView().then {
+        $0.backgroundColor = UIColor(red: 0.4, green: 0.0, blue: 0.52, alpha: 0.5)
+    }
     
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 2
-        return label
-    }()
+    var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.numberOfLines = 2
+    }
     var salePercentLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textColor = .orange
         return label
     }()
+    
     var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)

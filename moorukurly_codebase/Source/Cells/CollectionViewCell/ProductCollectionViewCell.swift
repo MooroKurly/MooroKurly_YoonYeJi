@@ -7,26 +7,25 @@
 
 import UIKit
 
+import Then
+
 class ProductCollectionViewCell: UICollectionViewCell {
     
     var productImageView = UIImageView()
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 2
-        return label
-    }()
-    var salePercentLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        label.textColor = .orange
-        return label
-    }()
-    var priceLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        return label
-    }()
+
+    var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.numberOfLines = 2
+    }
+    
+    var salePercentLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        $0.textColor = .orange
+    }
+    
+    var priceLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+    }
  
     override init(frame: CGRect) {
         super.init(frame: frame)

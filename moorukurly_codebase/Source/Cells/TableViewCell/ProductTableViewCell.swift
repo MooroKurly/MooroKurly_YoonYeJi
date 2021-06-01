@@ -11,24 +11,18 @@ class ProductTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
     
+    var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+    }
     
-    
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-    
-    
-    
-    var productCollectionView: UICollectionView = {
+    var productCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .white
-        return collectionView
-    }()
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .white
+        $0.contentInset = UIEdgeInsets.zero
+        $0.collectionViewLayout = layout
+    }
     
 
 

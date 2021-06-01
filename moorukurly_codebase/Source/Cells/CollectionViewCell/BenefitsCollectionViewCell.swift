@@ -7,22 +7,20 @@
 
 import UIKit
 
+import Then
+
 class BenefitsCollectionViewCell: UICollectionViewCell {
     
     var productImageView = UIImageView()
     
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        return label
-    }()
+    var titleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+    }
     
-    var subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = UIColor(red: 152 / 255, green: 153 / 255, blue: 154 / 255, alpha: 1.0)
-        return label
-    }()
+    var subTitleLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        $0.textColor = UIColor(red: 152 / 255, green: 153 / 255, blue: 154 / 255, alpha: 1.0)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

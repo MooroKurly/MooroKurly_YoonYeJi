@@ -10,12 +10,10 @@ import SnapKit
 
 class CustomTabCollectionViewCell: UICollectionViewCell {
     
-    var tabButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        return button
-    }()
+    var tabButton = UIButton().then {
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -9,31 +9,27 @@ import UIKit
 import SnapKit
 
 class BannerTableViewCell: UITableViewCell {
-    
-    var bannerCollectionView: UICollectionView = {
+        
+    var bannerCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
         let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
-        collectionView.isScrollEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isPagingEnabled = true
-        collectionView.backgroundColor = .white
-        return collectionView
-    }()
+        $0.isScrollEnabled = true
+        $0.isPagingEnabled = true
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .white
+        $0.contentInset = UIEdgeInsets.zero
+        $0.collectionViewLayout = layout
+    }
     
-    var indicatorBox: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-        view.layer.cornerRadius = 8
-        return view
-    }()
+    var indicatorBox = UIView().then {
+        $0.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        $0.layer.cornerRadius = 8
+    }
     
-    var indicatorPage: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 12)
-        return label
-    }()
+    var indicatorPage = UILabel().then {
+        $0.textColor = .white
+        $0.font = UIFont.systemFont(ofSize: 12)
+    }
 
     var bannerList = ["imgBanner", "ImgBanner2"]
     
