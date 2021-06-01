@@ -299,13 +299,8 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 
-extension HomeViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool{
-           return true
-       }
-}
-
 extension HomeViewController: UIScrollViewDelegate {
+    // 테이블뷰 스크롤 될 때마다 호출되는 함수.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let initialPoint = CGPoint(x: 0, y: 0)
         

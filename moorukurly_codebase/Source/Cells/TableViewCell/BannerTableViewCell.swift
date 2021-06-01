@@ -36,7 +36,6 @@ class BannerTableViewCell: UITableViewCell {
     }()
 
     var bannerList = ["imgBanner", "ImgBanner2"]
-    var pageIndex: Int = 1
     
     func setUI(){
         addSubviews(bannerCollectionView, indicatorBox)
@@ -89,6 +88,7 @@ class BannerTableViewCell: UITableViewCell {
 
 extension BannerTableViewCell: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print(targetContentOffset.pointee.x)
         var page = Int(targetContentOffset.pointee.x / self.frame.width)
         if page >= bannerList.count {
             page = page % bannerList.count
