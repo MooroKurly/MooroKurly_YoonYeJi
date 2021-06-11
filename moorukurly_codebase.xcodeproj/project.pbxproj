@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		AA2CFA822666D4FC00489718 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2CFA812666D4FC00489718 /* HeaderView.swift */; };
 		AA6CA5E32668D6D600B69950 /* ExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6CA5E22668D6D600B69950 /* ExpandableTableViewCell.swift */; };
+		AA8834C72673438C00190C93 /* KurlyRecommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8834C62673438C00190C93 /* KurlyRecommandViewController.swift */; };
+		AA8834CB267343AE00190C93 /* NewProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8834CA267343AE00190C93 /* NewProductViewController.swift */; };
+		AA8834CF267343BB00190C93 /* BestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8834CE267343BB00190C93 /* BestViewController.swift */; };
+		AA8834D2267343CD00190C93 /* ShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8834D1267343CD00190C93 /* ShoppingViewController.swift */; };
+		AA8834D5267343DF00190C93 /* SpecialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA8834D4267343DF00190C93 /* SpecialViewController.swift */; };
 		AA95367C26676D560097A176 /* CategoryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95367B26676D560097A176 /* CategoryDataModel.swift */; };
 		AA95367F26676F100097A176 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA95367E26676F100097A176 /* CategoryTableViewCell.swift */; };
 		AA953683266781C20097A176 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA953682266781C20097A176 /* HeaderTableViewCell.swift */; };
@@ -44,6 +49,11 @@
 		9AC21549D32725F54BD5EBF1 /* Pods-moorukurly_codebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-moorukurly_codebase.release.xcconfig"; path = "Target Support Files/Pods-moorukurly_codebase/Pods-moorukurly_codebase.release.xcconfig"; sourceTree = "<group>"; };
 		AA2CFA812666D4FC00489718 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		AA6CA5E22668D6D600B69950 /* ExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewCell.swift; sourceTree = "<group>"; };
+		AA8834C62673438C00190C93 /* KurlyRecommandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurlyRecommandViewController.swift; sourceTree = "<group>"; };
+		AA8834CA267343AE00190C93 /* NewProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProductViewController.swift; sourceTree = "<group>"; };
+		AA8834CE267343BB00190C93 /* BestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestViewController.swift; sourceTree = "<group>"; };
+		AA8834D1267343CD00190C93 /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
+		AA8834D4267343DF00190C93 /* SpecialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialViewController.swift; sourceTree = "<group>"; };
 		AA95367B26676D560097A176 /* CategoryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDataModel.swift; sourceTree = "<group>"; };
 		AA95367E26676F100097A176 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		AA953682266781C20097A176 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,6 +111,18 @@
 				43CE845BEE6AB0A0CAA8F3BF /* Pods_moorukurly_codebase.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA8834C52673435400190C93 /* HomeTabbar */ = {
+			isa = PBXGroup;
+			children = (
+				AA8834C62673438C00190C93 /* KurlyRecommandViewController.swift */,
+				AA8834CA267343AE00190C93 /* NewProductViewController.swift */,
+				AA8834CE267343BB00190C93 /* BestViewController.swift */,
+				AA8834D1267343CD00190C93 /* ShoppingViewController.swift */,
+				AA8834D4267343DF00190C93 /* SpecialViewController.swift */,
+			);
+			path = HomeTabbar;
 			sourceTree = "<group>";
 		};
 		AAA63AE6266114C6002D5B6C /* Model */ = {
@@ -167,6 +189,7 @@
 		AABBBC64266011D0001CFE64 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				AA8834C52673435400190C93 /* HomeTabbar */,
 				AABBBC65266011DC001CFE64 /* HomeViewController.swift */,
 				AABBBC69266011E4001CFE64 /* RecommendViewController.swift */,
 				AABBBC6C266011EC001CFE64 /* CategoryViewController.swift */,
@@ -337,13 +360,17 @@
 				AAA63AE8266114D6002D5B6C /* ProductDataModel.swift in Sources */,
 				AA953683266781C20097A176 /* HeaderTableViewCell.swift in Sources */,
 				AAA63B242663BBE6002D5B6C /* BenefitsTableViewCell.swift in Sources */,
+				AA8834CF267343BB00190C93 /* BestViewController.swift in Sources */,
+				AA8834D2267343CD00190C93 /* ShoppingViewController.swift in Sources */,
 				AAA63B1E266399A1002D5B6C /* DailySpecialTableViewCell.swift in Sources */,
 				AABBBC502660109D001CFE64 /* TabBarViewController.swift in Sources */,
 				AABBBC7D266019B3001CFE64 /* Extension+UIImage.swift in Sources */,
 				AA95367C26676D560097A176 /* CategoryDataModel.swift in Sources */,
 				AAA63AE426611386002D5B6C /* ProductCollectionViewCell.swift in Sources */,
+				AA8834C72673438C00190C93 /* KurlyRecommandViewController.swift in Sources */,
 				AAA63AE126611374002D5B6C /* ProductTableViewCell.swift in Sources */,
 				AA2CFA822666D4FC00489718 /* HeaderView.swift in Sources */,
+				AA8834CB267343AE00190C93 /* NewProductViewController.swift in Sources */,
 				AA95367F26676F100097A176 /* CategoryTableViewCell.swift in Sources */,
 				AABBBC70266011F3001CFE64 /* SearchViewController.swift in Sources */,
 				AABBBC792660131D001CFE64 /* Extension+UIColor.swift in Sources */,
@@ -358,6 +385,7 @@
 				AABBBC9126603D16001CFE64 /* BannerCollectionViewCell.swift in Sources */,
 				AAA63B272663BD3D002D5B6C /* BenefitsCollectionViewCell.swift in Sources */,
 				AABBBC66266011DC001CFE64 /* HomeViewController.swift in Sources */,
+				AA8834D5267343DF00190C93 /* SpecialViewController.swift in Sources */,
 				AABBBC6D266011EC001CFE64 /* CategoryViewController.swift in Sources */,
 				AABBBC6A266011E4001CFE64 /* RecommendViewController.swift in Sources */,
 			);

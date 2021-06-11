@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SpeacialViewController: UIViewController {
+class SpecialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,4 +28,3 @@ class SpeacialViewController: UIViewController {
     */
 
 }
-special
