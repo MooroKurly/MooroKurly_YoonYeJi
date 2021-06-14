@@ -12,7 +12,14 @@ import Then
 
 class HomeViewController: UIViewController {
     
+    
+    
+    // MARK:- status Properties
+    
+    var tabSelectedIndex : Int = 0
+    
     // MARK: - UI properties
+    
     var headerView = UIView().then {
         $0.backgroundColor = .purple
     }
@@ -130,6 +137,7 @@ class HomeViewController: UIViewController {
     }
     
     func setScrollView() {
+        scrollView.delegate = self
         scrollView.contentSize.width = self.view.frame.width * 5
         
         self.addChild(kurlyRecommandVC)
@@ -161,28 +169,25 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let cellWidth = UIScreen.main.bounds.width * (69/375)
-        
+
+        tabSelectedIndex = indexPath.row
+
         switch indexPath.row {
         case 0:
             scrollView.setContentOffset(CGPoint.zero, animated: true)
-            tabIndicator.frame = CGRect(x: 16, y: 132, width: cellWidth, height: 3)
         case 1:
             scrollView.setContentOffset(CGPoint(x: self.scrollView.frame.width, y: 0), animated: true)
-            tabIndicator.frame = CGRect(x: cellWidth + 16, y: 132, width: cellWidth, height: 3)
         case 2:
             scrollView.setContentOffset(CGPoint(x: self.scrollView.frame.width * 2, y: 0), animated: true)
-            tabIndicator.frame = CGRect(x: cellWidth*2 + 16, y: 132, width: cellWidth, height: 3)
         case 3:
             scrollView.setContentOffset(CGPoint(x: self.scrollView.frame.width * 3, y: 0), animated: true)
-            tabIndicator.frame = CGRect(x: cellWidth*3 + 16, y: 132, width: cellWidth, height: 3)
         case 4:
             scrollView.setContentOffset(CGPoint(x: self.scrollView.frame.width * 4, y: 0), animated: true)
-            tabIndicator.frame = CGRect(x: cellWidth*4 + 16, y: 132, width: cellWidth, height: 3)
         default:
             break
         }
+        
+        customTabbarCollectionView.reloadData()
     }
 }
 
@@ -196,13 +201,13 @@ extension HomeViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.tabLabel.text = tabList[indexPath.row]
-        
-        if cell.isFirst == true && indexPath.row == 0 {
-            cell.tabLabel.textColor = .purple
-            cell.isFirst = false
+        if indexPath.row != tabSelectedIndex {
+            cell.setStatus(name: tabList[indexPath.row], isTouched: false)
         }
-        
+        else {
+            cell.setStatus(name: tabList[indexPath.row], isTouched: true)
+        }
+    
         return cell
     }
     
@@ -232,6 +237,36 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("호출")
+        let page = Int(targetContentOffset.pointee.x / UIScreen.main.bounds.width)
+        
+        switch page {
+        case 0:
+            tabSelectedIndex = 0
+        case 1:
+            tabSelectedIndex = 1
+        case 2:
+            tabSelectedIndex = 2
+        case 3:
+            tabSelectedIndex = 3
+        case 4:
+            tabSelectedIndex = 4
+        default:
+            break
+        }
+       
+        customTabbarCollectionView.reloadData()
+    }
+    
+
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 양 옆 마진 고려
+        let cellwidth = UIScreen.main.bounds.width * (69/375)
+    
+        print((scrollView.contentOffset.x / UIScreen.main.bounds.width))
+        tabIndicator.snp.updateConstraints {
+            $0.leading.equalToSuperview().offset( (scrollView.contentOffset.x / UIScreen.main.bounds.width) * cellwidth + 16)
+        }
     }
 }
+
