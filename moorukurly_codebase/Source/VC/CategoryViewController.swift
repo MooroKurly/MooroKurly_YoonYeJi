@@ -12,7 +12,7 @@ class CategoryViewController: UIViewController {
     var headerView = HeaderView()
     var categoryTableView = UITableView()
     var categoryList: [CategoryDataModel] = [
-        CategoryDataModel(image: "ic_bookmark", categoryName: "채소"), // 0번쨰
+        CategoryDataModel(image: "ic_bookmark", categoryName: "채소"),
         CategoryDataModel(image: "ic_bookmark", categoryName: "과일·견과·쌀"),
         CategoryDataModel(image: "ic_bookmark", categoryName: "수산·해물·건어물"),
         CategoryDataModel(image: "ic_bookmark", categoryName: "정육·계란"),
@@ -70,7 +70,6 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var newClickedIndex = indexPath.row
-        print(newClickedIndex, clickedIndex)
         if newClickedIndex > clickedIndex {
             newClickedIndex = newClickedIndex - rowOfCategory[clickedIndex] - 1
         }
@@ -110,7 +109,7 @@ extension CategoryViewController: UITableViewDataSource {
             if isOpen[clickedIndex] == true {
                 return categoryList.count + rowOfCategory[clickedIndex] + 1
             }
-            return categoryList.count // 원래 그냥 닫혀있을때 개수로 다시
+            return categoryList.count
         default:
             return 0
         }
@@ -126,11 +125,8 @@ extension CategoryViewController: UITableViewDataSource {
             headerCell.selectionStyle = .none
             return headerCell
         case 1:
-            // 0번째 인덱스가 true일때(열려있을때) / false(닫혀있을때)
             if isOpen[clickedIndex] == true {
                 switch indexPath.row {
-                // clickedIndex가 0인 상태, 그니까 1번부터 ~ 4번까지는 새로운 셀(저 회색깔)로 새로 그려줘야되는 상황인거지
-                // = case 1... 1 + 3 = 4 = case 1...4 번까지는 expandableCell로 새로 그려주겠다!
                 case clickedIndex+1...(clickedIndex+1)+rowOfCategory[clickedIndex]: // 클릭된 row 기준으로 더 그려줘야 할 row들..
                     guard let expandableCell = tableView.dequeueReusableCell(withIdentifier: "ExpandableTableViewCell", for: indexPath)
                             as? ExpandableTableViewCell else {
@@ -140,13 +136,11 @@ extension CategoryViewController: UITableViewDataSource {
                     expandableCell.backgroundColor = .gray
                     return expandableCell
                 default:
-                    // 1~4번 제외한 나머지 것들은 categoryCell로 그려주겠다.
                     guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath)
                             as? CategoryTableViewCell else { return UITableViewCell() }
                     return categoryCell
                 }
             } else {
-                // false일때도(닫혀있을때) categoryCell로 그려주겠다.
                 guard let categoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryTableViewCell", for: indexPath)
                         as? CategoryTableViewCell else { return UITableViewCell() }
                 categoryCell.setData(categoryIcon: "ic_bookmark", categoryName: categoryList[indexPath.row].categoryName)
