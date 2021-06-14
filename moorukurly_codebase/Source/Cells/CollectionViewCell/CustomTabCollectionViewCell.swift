@@ -11,24 +11,16 @@ import SnapKit
 class CustomTabCollectionViewCell: UICollectionViewCell {
     
     var tabLabel = UILabel().then {
-//        $0.setTitleColor(.black, for: .normal)
         $0.font = UIFont.systemFont(ofSize: 14)
         $0.textColor = .darkGray
     }
     
-    override var isHighlighted: Bool{
-        didSet{
-            tabLabel.textColor = isHighlighted ? .purple : .darkGray
-        }
-    }
     
-    override var isSelected: Bool{
-        didSet{
-            tabLabel.textColor = isSelected ? .purple : .darkGray
-        }
+    func setStatus(name : String, isTouched : Bool)
+    {
+        tabLabel.textColor = isTouched ? .purple : .darkGray
+        tabLabel.text = name
     }
-    
-    var isFirst: Bool = true
          
     
     override init(frame: CGRect) {
