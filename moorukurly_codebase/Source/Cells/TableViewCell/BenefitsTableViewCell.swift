@@ -23,7 +23,7 @@ class BenefitsTableViewCell: UITableViewCell {
     }
     
     
-    let imageList = ["imgSale1", "imgSale2", "imgSale3"]
+    var imageList : [EventDataModel] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -65,7 +65,7 @@ extension BenefitsTableViewCell: UICollectionViewDelegate {
 
 extension BenefitsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return imageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -74,7 +74,7 @@ extension BenefitsTableViewCell: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.setData(productImage: imageList[indexPath.row], title: "아티제 최대 15% 할인", subTitle: "쿠키부터 롤케이크까지")
+        cell.setData(productImage: imageList[indexPath.row].thumbnail, title: imageList[indexPath.row].title, subTitle: imageList[indexPath.row].subtitle)
         
         return cell
     }

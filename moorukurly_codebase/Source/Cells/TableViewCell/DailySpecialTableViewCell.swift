@@ -65,11 +65,8 @@ class DailySpecialTableViewCell: UITableViewCell {
         dailySpecialCollectionView.register(DailySpecialCollectionViewCell.self, forCellWithReuseIdentifier: "DailySpecialCollectionViewCell")
     }
     
-    func setDummyData() {
-        saleProductList = [
-            ProductModelData(productImage: "imgDailysale", productName: "[Kurly’s] 간편하게 바삭, 통등심 돈까스", productSalePercent: "15%", productPrice: "19000원"),
-            ProductModelData(productImage: "imgDailysale", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원")
-        ]
+    func setData(productList: [ProductModelData]) {
+        saleProductList = productList
     }
 }
 
@@ -88,7 +85,7 @@ extension DailySpecialTableViewCell: UICollectionViewDataSource {
         }
         
         
-        cell.setData(productImage: saleProductList[indexPath.row].productImage, remaingTime: "17:04:11", title: saleProductList[indexPath.row].productName, salePercent: saleProductList[indexPath.row].productSalePercent, price: saleProductList[indexPath.row].productPrice)
+        cell.setData(productImage: saleProductList[indexPath.row].thumbnail, remaingTime: "17:04:11", title: saleProductList[indexPath.row].title, salePercent: String(saleProductList[indexPath.row].discount!), price: String(saleProductList[indexPath.row].price!))
         
         return cell
     }
