@@ -42,6 +42,15 @@ class LoginViewController: UIViewController {
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
+    var signUpButton = UIButton().then {
+        $0.setTitle("회원가입", for: .normal)
+        $0.setTitleColor(.purple, for: .normal)
+        $0.layer.borderWidth = 0.5
+        $0.layer.borderColor = UIColor.purple.cgColor
+        $0.layer.cornerRadius = 3
+        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,7 +59,7 @@ class LoginViewController: UIViewController {
     }
     
     func setUI() {
-        view.addSubviews(idTextField, passwordTextField, signInButton, titleLabel, closeButton)
+        view.addSubviews(idTextField, passwordTextField, signInButton, signUpButton, titleLabel, closeButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(64)
@@ -77,6 +86,13 @@ class LoginViewController: UIViewController {
         
         signInButton.snp.makeConstraints {
             $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(40)
+        }
+        
+        signUpButton.snp.makeConstraints {
+            $0.top.equalTo(signInButton.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(40)
