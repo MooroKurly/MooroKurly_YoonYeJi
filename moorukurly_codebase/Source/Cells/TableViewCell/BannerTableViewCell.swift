@@ -10,6 +10,8 @@ import SnapKit
 
 class BannerTableViewCell: UITableViewCell {
         
+    var handler: ((Result<[AdDataModel], Error>) -> Void)!
+    
     var bannerCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -31,7 +33,7 @@ class BannerTableViewCell: UITableViewCell {
         $0.font = UIFont.systemFont(ofSize: 12)
     }
 
-    var bannerList = ["imgBanner", "ImgBanner2"]
+    var bannerList: [AdDataModel] = []
     
     func setUI(){
         addSubviews(bannerCollectionView, indicatorBox)
@@ -64,14 +66,12 @@ class BannerTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
         }
         
-        
     }
 
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -80,11 +80,24 @@ class BannerTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func serverConneted() {
+        handler = { result in
+            switch result {
+            case .success(let ad):
+                self.bannerList = ad
+                self.indicatorPage.text = "1 / \(self.bannerList.count)"
+                self.bannerCollectionView.reloadData()
+            case .failure(let err):
+                print(err)
+            }
+        }
+        RecommandService.shared.getAdBanner(completion: handler)
+    }
 }
 
 extension BannerTableViewCell: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print(targetContentOffset.pointee.x)
+        
         var page = Int(targetContentOffset.pointee.x / self.frame.width)
         if page >= bannerList.count {
             page = page % bannerList.count
@@ -95,13 +108,13 @@ extension BannerTableViewCell: UICollectionViewDelegate {
 
 extension BannerTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
+        return bannerList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCollectionViewCell", for: indexPath) as? BannerCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.setData(BannerImage: bannerList[indexPath.row % bannerList.count])
+        cell.setData(bannerImage: bannerList[indexPath.row % bannerList.count].img)
         
         return cell
     }
