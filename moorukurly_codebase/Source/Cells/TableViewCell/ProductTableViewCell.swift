@@ -91,7 +91,7 @@ extension ProductTableViewCell: UICollectionViewDataSource {
         }
         
         
-        cell.setData(productImage: productDummyData[indexPath.row].productImage, title: productDummyData[indexPath.row].productName, salePercent: productDummyData[indexPath.row].productSalePercent, price: productDummyData[indexPath.row].productPrice)
+        cell.setData(productImage: productDummyData[indexPath.row].thumbnail, title: productDummyData[indexPath.row].title, salePercent: String(productDummyData[indexPath.row].discount!), price: String(productDummyData[indexPath.row].price!))
         
         
         return cell
@@ -104,7 +104,7 @@ extension ProductTableViewCell : UICollectionViewDelegateFlowLayout {
 
         let width = UIScreen.main.bounds.width
         let cellWidth = width * (150/375)
-        let height = cellWidth * (266/150)
+        let height = cellWidth * (286/150)
         
         return CGSize(width: cellWidth, height: height)
     }
