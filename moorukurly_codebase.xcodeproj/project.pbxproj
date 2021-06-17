@@ -48,6 +48,10 @@
 		AAE2AB6E267B7E6700A0FD1C /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB6D267B7E6700A0FD1C /* LoginService.swift */; };
 		AAE2AB76267B7F7400A0FD1C /* NerworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB75267B7F7400A0FD1C /* NerworkResult.swift */; };
 		AAE2AB79267B800D00A0FD1C /* LoginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB78267B800D00A0FD1C /* LoginDataModel.swift */; };
+		AAE2AB7C267B9D4200A0FD1C /* RecommandService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB7B267B9D4200A0FD1C /* RecommandService.swift */; };
+		AAE2AB7F267B9FFB00A0FD1C /* AdDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB7E267B9FFB00A0FD1C /* AdDataModel.swift */; };
+		AAE2AB88267BD09100A0FD1C /* EventDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB87267BD09100A0FD1C /* EventDataModel.swift */; };
+		AAE2AB8C267BE14200A0FD1C /* String + strikeThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE2AB8B267BE14200A0FD1C /* String + strikeThrough.swift */; };
 		E66CF302B1497E0762C37508 /* Pods_moorukurly_codebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CE845BEE6AB0A0CAA8F3BF /* Pods_moorukurly_codebase.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +102,10 @@
 		AAE2AB6D267B7E6700A0FD1C /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		AAE2AB75267B7F7400A0FD1C /* NerworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerworkResult.swift; sourceTree = "<group>"; };
 		AAE2AB78267B800D00A0FD1C /* LoginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataModel.swift; sourceTree = "<group>"; };
+		AAE2AB7B267B9D4200A0FD1C /* RecommandService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandService.swift; sourceTree = "<group>"; };
+		AAE2AB7E267B9FFB00A0FD1C /* AdDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDataModel.swift; sourceTree = "<group>"; };
+		AAE2AB87267BD09100A0FD1C /* EventDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataModel.swift; sourceTree = "<group>"; };
+		AAE2AB8B267BE14200A0FD1C /* String + strikeThrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + strikeThrough.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +155,8 @@
 				AAA63AE7266114D6002D5B6C /* ProductDataModel.swift */,
 				AA95367B26676D560097A176 /* CategoryDataModel.swift */,
 				AAE2AB78267B800D00A0FD1C /* LoginDataModel.swift */,
+				AAE2AB7E267B9FFB00A0FD1C /* AdDataModel.swift */,
+				AAE2AB87267BD09100A0FD1C /* EventDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,6 +234,7 @@
 				AABBBC782660131D001CFE64 /* Extension+UIColor.swift */,
 				AABBBC7C266019B3001CFE64 /* Extension+UIImage.swift */,
 				AABBBC8226602809001CFE64 /* Extension+UIView.swift */,
+				AAE2AB8B267BE14200A0FD1C /* String + strikeThrough.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -288,6 +299,7 @@
 				AAE2AB6A267B7DF700A0FD1C /* APIConstants.swift */,
 				AAE2AB6D267B7E6700A0FD1C /* LoginService.swift */,
 				AAE2AB75267B7F7400A0FD1C /* NerworkResult.swift */,
+				AAE2AB7B267B9D4200A0FD1C /* RecommandService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -410,11 +422,13 @@
 				AAA63B242663BBE6002D5B6C /* BenefitsTableViewCell.swift in Sources */,
 				AAE2AB5B267B4DDE00A0FD1C /* NoLoginView.swift in Sources */,
 				AA8834CF267343BB00190C93 /* BestViewController.swift in Sources */,
+				AAE2AB8C267BE14200A0FD1C /* String + strikeThrough.swift in Sources */,
 				AA8834D2267343CD00190C93 /* ShoppingViewController.swift in Sources */,
 				AAA63B1E266399A1002D5B6C /* DailySpecialTableViewCell.swift in Sources */,
 				AAE2AB68267B7BF600A0FD1C /* TextFieldWithPadding.swift in Sources */,
 				AABBBC502660109D001CFE64 /* TabBarViewController.swift in Sources */,
 				AAE2AB76267B7F7400A0FD1C /* NerworkResult.swift in Sources */,
+				AAE2AB7F267B9FFB00A0FD1C /* AdDataModel.swift in Sources */,
 				AABBBC7D266019B3001CFE64 /* Extension+UIImage.swift in Sources */,
 				AA95367C26676D560097A176 /* CategoryDataModel.swift in Sources */,
 				AAA63AE426611386002D5B6C /* ProductCollectionViewCell.swift in Sources */,
@@ -429,10 +443,12 @@
 				AABBBC73266011FB001CFE64 /* MyKurlyViewController.swift in Sources */,
 				AABBBC4C2660109D001CFE64 /* AppDelegate.swift in Sources */,
 				AAE2AB6E267B7E6700A0FD1C /* LoginService.swift in Sources */,
+				AAE2AB7C267B9D4200A0FD1C /* RecommandService.swift in Sources */,
 				AABBBC8726602E10001CFE64 /* CustomTabCollectionViewCell.swift in Sources */,
 				AA6CA5E32668D6D600B69950 /* ExpandableTableViewCell.swift in Sources */,
 				AAA63B212663AEDB002D5B6C /* DailySpecialCollectionViewCell.swift in Sources */,
 				AABBBC4E2660109D001CFE64 /* SceneDelegate.swift in Sources */,
+				AAE2AB88267BD09100A0FD1C /* EventDataModel.swift in Sources */,
 				AABBBC8B26603B0B001CFE64 /* BannerTableViewCell.swift in Sources */,
 				AAE2AB5E267B6D0D00A0FD1C /* LoginViewController.swift in Sources */,
 				AABBBC9126603D16001CFE64 /* BannerCollectionViewCell.swift in Sources */,
