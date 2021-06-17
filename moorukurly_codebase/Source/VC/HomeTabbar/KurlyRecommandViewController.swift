@@ -28,17 +28,10 @@ class KurlyRecommandViewController: UIViewController {
     
     var cachedPosition : [CGFloat] = [0,0,0,0,0,0,0]
     
-    let productDummyData: [ProductModelData] = [
-        ProductModelData(productImage: "imgFood1", productName: "[우리밀] 백밀가루 & 옛밀가루", productSalePercent: "15%", productPrice: "19000원"),
-        ProductModelData(productImage: "imgFood2", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
-        ProductModelData(productImage: "imgFood3", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
-    ]
+    let productDummyData: [ProductModelData] = [    ]
     
-    let productDummyData2: [ProductModelData] = [
-        ProductModelData(productImage: "imgProduct", productName: "[윤예지] 윤예지표", productSalePercent: "15%", productPrice: "19000원"),
-        ProductModelData(productImage: "imgProduct", productName: "[홍대쭈꾸미] 쭈꾸미볶음 300g", productSalePercent: "15%", productPrice: "5300원"),
-        ProductModelData(productImage: "imgProduct", productName: "[기와] LA갈비 800g", productSalePercent: "15%", productPrice: "19000원"),
-    ]
+    var handler: ((Result<[ProductModelData], Error>) -> Void)!
+    var eventHandler: ((Result<[EventDataModel], Error>) -> Void)!
     
     // MARK: - LifeCycle
     
@@ -138,7 +131,7 @@ extension KurlyRecommandViewController: UITableViewDelegate {
             let height = cellWidth * (333/cellWidth)
             return height
         case 2: // 일일특가
-            return 650
+            return 400
         case 3: // 특가/혜택
             return 406
         case 4: // 놓치면 후회할 가격
@@ -164,6 +157,7 @@ extension KurlyRecommandViewController: UITableViewDataSource {
         case 0: // 배너
             guard let bannerCell = tableView.dequeueReusableCell(withIdentifier: "BannerTableViewCell", for: indexPath)
                     as? BannerTableViewCell else { return UITableViewCell() }
+            bannerCell.serverConneted()
             bannerCell.selectionStyle = .none
             bannerCell.backgroundColor = .white
             bannerCell.setUI()
@@ -172,23 +166,53 @@ extension KurlyRecommandViewController: UITableViewDataSource {
             guard let productCell = tableView.dequeueReusableCell(withIdentifier: "ProductTableViewCell", for: indexPath) as? ProductTableViewCell else {
                 return UITableViewCell() }
             productCell.selectionStyle = .none
+            handler = { result in
+                switch result {
+                case .success(let product):
+                    productCell.setData(productList: product)
+                case .failure(let err):
+                    print("에러")
+                    print(err)
+                }
+            }
+            RecommandService.shared.getThisItem(completion: handler)
             productCell.setUI()
             productCell.titleLabel.text = "이 상품 어때요?"
-            productCell.setData(productList: productDummyData)
             productCell.productCollectionView.contentOffset.x = cachedPosition[indexPath.section]
             return productCell
         case 2: // 일일특가
             guard let dailySpecialCell = tableView.dequeueReusableCell(withIdentifier: "DailySpecialTableViewCell", for: indexPath) as? DailySpecialTableViewCell else {
                 return UITableViewCell() }
             dailySpecialCell.selectionStyle = .none
+            handler = { result in
+                switch result {
+                case .success(let product):
+                    dump(product)
+                    dailySpecialCell.setData(productList: product)
+                    dailySpecialCell.dailySpecialCollectionView.reloadData()
+                case .failure(let err):
+                    print("에러")
+                    print(err)
+                }
+            }
+            RecommandService.shared.getOnedayItem(completion: handler)
             dailySpecialCell.titleLabel.text = "일일특가"
             dailySpecialCell.subTitleLabel.text = "24시간 한정 특가"
-            dailySpecialCell.setDummyData()
             dailySpecialCell.setUI()
             return dailySpecialCell
         case 3: // 특가/혜택
             guard let benefitCell = tableView.dequeueReusableCell(withIdentifier: "BenefitsTableViewCell", for: indexPath) as? BenefitsTableViewCell else {
                 return UITableViewCell() }
+            eventHandler = { result in
+                switch result {
+                case .success(let product):
+                    benefitCell.imageList = product
+                    benefitCell.BenefitsCollectionView.reloadData()
+                case .failure(let err):
+                    print(err)
+                }
+            }
+            RecommandService.shared.getEventItem(completion: eventHandler)
             benefitCell.selectionStyle = .none
             benefitCell.backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 248 / 255, alpha: 1.0)
             benefitCell.titleLabel.text = "특가/혜택"
@@ -200,9 +224,17 @@ extension KurlyRecommandViewController: UITableViewDataSource {
             regretCell.selectionStyle = .none
             regretCell.setUI()
             regretCell.titleLabel.text = "놓치면 후회할 가격"
-            regretCell.setData(productList: productDummyData2)
+            handler = { result in
+                switch result {
+                case .success(let product):
+                    regretCell.setData(productList: product)
+                case .failure(let err):
+                    print("에러")
+                    print(err)
+                }
+            }
+            RecommandService.shared.getBigSaleItem(completion: handler)
             regretCell.productCollectionView.contentOffset.x = cachedPosition[indexPath.section]
-
             return regretCell
         default:
             return UITableViewCell()
