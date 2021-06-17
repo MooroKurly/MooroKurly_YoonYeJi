@@ -14,4 +14,9 @@ struct APIConstants {
     static let loginURL = baseURL + "/auth"
     static let signupURL = baseURL + "/user"
     
+    static let adURL = baseURL + "/products/ad"
+    static let thisURL = baseURL + "/products/this"
+    static let bigSaleURL = baseURL + "/products/bigsale"
+    static let eventURL = baseURL + "/products/event"
+    static let onedayURL = baseURL + "/products/oneday"
 }
