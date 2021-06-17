@@ -6,17 +6,18 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BannerCollectionViewCell: UICollectionViewCell {
     
-    var bannerImage = UIImageView()
+    var bannerImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(bannerImage)
+        addSubview(bannerImageView)
         
-        bannerImage.snp.makeConstraints {
+        bannerImageView.snp.makeConstraints {
             $0.top.bottom.leading.trailing.equalToSuperview()
         }
     }
@@ -25,10 +26,8 @@ class BannerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(BannerImage: String) {
-        if let image = UIImage(named: BannerImage) {
-            bannerImage.image = image
-        }
+    func setData(bannerImage: String) {
+        bannerImageView.kf.setImage(with: URL(string: bannerImage))
     }
     
 }

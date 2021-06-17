@@ -45,6 +45,7 @@ class DailySpecialCollectionViewCell: UICollectionViewCell {
         
         productImageView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(173)
         }
         
         saleBoxView.snp.makeConstraints {
@@ -87,13 +88,11 @@ class DailySpecialCollectionViewCell: UICollectionViewCell {
                  title: String,
                  salePercent: String,
                  price: String) {
-        if let image = UIImage(named: productImage) {
-            productImageView.image = image
-        }
+        productImageView.kf.setImage(with: URL(string: productImage))
         remainingTimeLabel.text = remaingTime
         titleLabel.text = title
-        salePercentLabel.text = salePercent
-        priceLabel.text = price
+        salePercentLabel.text = salePercent + "%"
+        priceLabel.text = price + "원"
     }
  
 }

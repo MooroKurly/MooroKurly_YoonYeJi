@@ -63,7 +63,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
                  title: String,
                  salePercent: String,
                  price: String) {
-        if let image = UIImage(named: productImage) {
+        productImageView.kf.setImage(with: URL(string: productImage))
             productImageView.image = image
         }
         titleLabel.text = title

@@ -8,6 +8,7 @@
 import UIKit
 
 import Then
+import Kingfisher
 
 class BenefitsCollectionViewCell: UICollectionViewCell {
     
@@ -31,6 +32,7 @@ class BenefitsCollectionViewCell: UICollectionViewCell {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(16)
             $0.height.equalTo(94)
+            $0.width.equalTo(94)
         }
         
         titleLabel.snp.makeConstraints {
@@ -53,9 +55,7 @@ class BenefitsCollectionViewCell: UICollectionViewCell {
                  title: String,
                  subTitle: String) {
         
-        if let image = UIImage(named: productImage) {
-            productImageView.image = image
-        }
+        productImageView.kf.setImage(with: URL(string: productImage))
         titleLabel.text = title
         subTitleLabel.text = subTitle
     }
