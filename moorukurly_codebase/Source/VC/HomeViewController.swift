@@ -260,10 +260,8 @@ extension HomeViewController: UIScrollViewDelegate {
 
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 양 옆 마진 고려
         let cellwidth = UIScreen.main.bounds.width * (69/375)
     
-        print((scrollView.contentOffset.x / UIScreen.main.bounds.width))
         tabIndicator.snp.updateConstraints {
             $0.leading.equalToSuperview().offset( (scrollView.contentOffset.x / UIScreen.main.bounds.width) * cellwidth + 16)
         }
