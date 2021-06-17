@@ -8,6 +8,7 @@
 import UIKit
 
 import Then
+import Kingfisher
 
 class ProductCollectionViewCell: UICollectionViewCell {
     
@@ -23,14 +24,19 @@ class ProductCollectionViewCell: UICollectionViewCell {
         $0.textColor = .orange
     }
     
-    var priceLabel = UILabel().then {
+    var discountPriceLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
     }
  
+    var priceLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .darkGray
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubviews(productImageView, titleLabel, salePercentLabel, priceLabel)
+        addSubviews(productImageView, titleLabel, salePercentLabel, discountPriceLabel, priceLabel)
         
         productImageView.snp.makeConstraints {
             $0.top.leading.right.equalToSuperview()
@@ -46,13 +52,17 @@ class ProductCollectionViewCell: UICollectionViewCell {
         salePercentLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.left.equalToSuperview()
-            $0.right.equalTo(priceLabel.snp.left).offset(-9)
         }
         
-        priceLabel.snp.makeConstraints {
+        discountPriceLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(salePercentLabel.snp.trailing).offset(9)
         }
        
+        priceLabel.snp.makeConstraints {
+            $0.top.equalTo(discountPriceLabel.snp.bottom).offset(2)
+            $0.leading.equalToSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -64,10 +74,12 @@ class ProductCollectionViewCell: UICollectionViewCell {
                  salePercent: String,
                  price: String) {
         productImageView.kf.setImage(with: URL(string: productImage))
-            productImageView.image = image
-        }
         titleLabel.text = title
-        salePercentLabel.text = salePercent
-        priceLabel.text = price
+        if salePercent != "0" {
+            salePercentLabel.text = salePercent + "%"
+        }
+        discountPriceLabel.text = price + "원"
+        priceLabel.text = String(Int(price)! + Int(price)! * Int(salePercent)! / 100) + "원"
+        priceLabel.attributedText = priceLabel.text?.strikeThrough()
     }
 }
